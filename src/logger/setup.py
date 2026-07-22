@@ -4,7 +4,6 @@ from logging.handlers import RotatingFileHandler
 from from_root import from_root
 
 LOG_DIR = 'logs'
-# FIX 1: Use a static base name so RotatingFileHandler can actually do its job
 LOG_FILE = "app.log" 
 MAX_LOG_SIZE = 5 * 1024 * 1024  # 5 MB
 BACKUP_COUNT = 3  
@@ -17,19 +16,16 @@ def get_configured_logger(name="app_logger"):
     """Configures and returns a specific named logger instance."""
     logger = logging.getLogger(name)
     
-    # FIX 2: Prevent duplicate handlers if imported/called multiple times
     if logger.hasHandlers():
         return logger
         
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter("[ %(asctime)s ] %(name)s - %(levelname)s - %(message)s")
 
-    # File handler
     file_handler = RotatingFileHandler(log_file_path, maxBytes=MAX_LOG_SIZE, backupCount=BACKUP_COUNT)
     file_handler.setFormatter(formatter)
     file_handler.setLevel(logging.DEBUG)
     
-    # Console handler
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(formatter)
     console_handler.setLevel(logging.INFO)
@@ -37,7 +33,6 @@ def get_configured_logger(name="app_logger"):
     logger.addHandler(file_handler)
     logger.addHandler(console_handler)
     
-    # FIX 3: Stop logs from bubbling up and hijacking the root logger
     logger.propagate = False 
     
     return logger
