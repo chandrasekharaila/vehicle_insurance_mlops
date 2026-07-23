@@ -16,7 +16,7 @@ class Proj1Data:
         except Exception as e:
             raise CustomException(e,sys)
 
-    def export_data_as_dataframe(collection_name:str, database_name:Optional[str] = DATABASE_NAME):
+    def export_data_as_dataframe(self,collection_name:str, database_name:Optional[str] = DATABASE_NAME):
         try:
             if database_name is None:
                 collection = self.mongo_conn.database[collection_name]
