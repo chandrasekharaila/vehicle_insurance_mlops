@@ -15,7 +15,7 @@ class MongoClient:
             if MongoClient.client is None:
                 mongo_url = os.getenv(MONGODB_URL_KEY)
                 if mongo_url is None:
-                    raise CustomException("Mongo url is missing")
+                    raise CustomException("Mongo url is missing",sys)
                 MongoClient.client = pymongo.MongoClient(mongo_url, tls= True, tlsCAFile = ca)
             self.client = MongoClient.client
             self.database = self.client[database_name]
