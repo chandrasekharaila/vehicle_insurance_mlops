@@ -102,7 +102,7 @@ class DataTransformation:
             input_feature_test_arr = preprocessor.transform(input_feature_test_df)
 
            
-            logging.info("Applying SMOTEENN to training dataset only.")
+            logger.info("Applying SMOTEENN to training dataset only.")
             smt = SMOTEENN(sampling_strategy="minority")
             input_feature_train_final, target_feature_train_final = smt.fit_resample(
                 input_feature_train_arr, target_feature_train_df
